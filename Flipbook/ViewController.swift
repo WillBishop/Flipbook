@@ -35,6 +35,8 @@ class ViewController: UIViewController, PKCanvasViewDelegate {
 	let playButton = UIButton(type: .system)
 	var isPlaying = false
 	var playbackTimer: Timer?
+	var copyFrameOnNewPage = true
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view.
@@ -123,7 +125,9 @@ class ViewController: UIViewController, PKCanvasViewDelegate {
 	}
 	
 	func pageChanged() {
-		self.drawingPad.canvas.drawing = self.book.pages[currentIndex].drawing ?? PKDrawing()
+		if copyFrameOnNewPage {
+			self.drawingPad.canvas.drawing = self.book.pages[currentIndex].drawing ?? PKDrawing()
+		}
 		if currentIndex > 0 {
 			self.drawingPad.background.image = self.book.pages[currentIndex - 1].drawing?.image(from: drawingPad.bounds, scale: UIScreen.main.scale)
 		}
